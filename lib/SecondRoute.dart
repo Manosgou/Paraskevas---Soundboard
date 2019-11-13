@@ -26,44 +26,50 @@ class SecondRouteState extends State<SecondRoute> {
     );
   }
 
-  
+  Future<bool> _onWillPop() {
+    _assetsAudioPlayer.stop();
+    Navigator.of(context).pop(true);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: PrimaryColor,
-        title: Text("Επισόδειο 1ο...."),
-      ),
-      backgroundColor: Colors.black,
-      body: ListView(
-        children: <Widget>[
-          _btn(txt: 'Play', onPressed: () => _open(0)),
-          _btn(
-            txt: 'Play2',
-            onPressed: () => _open(1),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          _assetsAudioPlayer.stop();
-        },
-        label: Text('Stop'),
-        icon: Icon(Icons.stop),
-        backgroundColor: Colors.red,
-      ),
-    );
+    return WillPopScope(
+        onWillPop: _onWillPop,
+        child: new Scaffold(
+          appBar: AppBar(
+            backgroundColor: PrimaryColor,
+            title: Text("Επισόδειο 1ο...."),
+          ),
+          backgroundColor: Colors.black,
+          body: ListView(
+            children: <Widget>[
+              _btn(
+                txt: 'Play',
+                onPressed: () => _open(0),
+              ),
+              _btn(
+                txt: 'Play2',
+                onPressed: () => _open(1),
+              )
+            ],
+          ),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {
+              _assetsAudioPlayer.stop();
+            },
+            label: Text('Stop'),
+            icon: Icon(Icons.stop),
+            backgroundColor: Colors.red,
+          ),
+        ));
   }
 }
 
 class _btn extends StatelessWidget {
   final String txt;
   final VoidCallback onPressed;
-  
 
-  const _btn({Key key, this.txt, this.onPressed})
-      : super(key: key);
+  const _btn({Key key, this.txt, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +78,6 @@ class _btn extends StatelessWidget {
       child: RaisedButton(
         child: Text(txt),
         onPressed: onPressed,
-        
       ),
     );
   }

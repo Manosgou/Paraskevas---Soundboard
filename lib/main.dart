@@ -1,4 +1,5 @@
 import 'package:expand_widget/expand_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:paraskevas/SecondRoute.dart';
 import 'package:paraskevas/All.dart';
@@ -8,7 +9,43 @@ void main() => runApp(MaterialApp(
       home: Myapp(),
     ));
 
-class Myapp extends StatelessWidget {
+class Myapp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return MyappState();
+  }
+}
+
+class MyappState extends State<Myapp> {
+  _sendMail() async {
+    const uri =
+        'mailto:manolisgouvrikos@gmail.com?subject=Paraskevas - Bug report&body=';
+    try {
+      if (await canLaunch(uri)) {
+        await launch(uri);
+      } else {
+        throw 'Could not launch $uri';
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  _openWebSite() async {
+    const url =
+        'https://manosgou.github.io/';
+    try {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -38,8 +75,10 @@ class Myapp extends StatelessWidget {
                   ),
                   ListTile(
                     title: Text('Όλα'),
-                    onTap: () {Navigator.of(context)
-                          .push(_pageTransisionsSideMenu(All()));},
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(_pageTransisionsSideMenu(All()));
+                    },
                   ),
                   Text(
                     'About',
@@ -48,21 +87,24 @@ class Myapp extends StatelessWidget {
                   ),
                   ExpandText(
                     'Έκδοση:  1.0.0\n\nΗ ανεπίσημη ΜΕΘΑΝΙΩΤΙΚΗ έκδοση του Παρασκευά.Φτιαγμένο από μεθανιώτη για μεθανιώτες.',
-                    textAlign: TextAlign.justify,
+                    textAlign: TextAlign.left,
                     maxLength: 1,
                     arrowSize: 35,
                     arrowColor: PrimaryColor,
                   ),
-                  Text(
-                    'Created by:',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 10),
+                  RaisedButton(
+                    color: Colors.red,
+                    onPressed: _sendMail,
+                    child: Text('Αναφορά προβλήματος'),
                   ),
-                  Text(
-                    'Manos Gouvrikos',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 12),
-                  ), 
+                  ListTile(
+                    title: Text(
+                      'Created by:\nManos Gouvrikos',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    onTap: () {_openWebSite();},
+                  ),
                 ],
               ),
             ),
@@ -94,7 +136,6 @@ class Myapp extends StatelessWidget {
                 ])));
   }
 
-
   Route _pageTransisions(page) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,
@@ -113,8 +154,6 @@ class Myapp extends StatelessWidget {
       },
     );
   }
-
-
 
   Route _pageTransisionsSideMenu(page) {
     return PageRouteBuilder(
