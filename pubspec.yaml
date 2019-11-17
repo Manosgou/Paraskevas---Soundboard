@@ -22,6 +22,7 @@ dependencies:
   url_launcher: ^5.2.5
   assets_audio_player: ^1.0.1
   expand_widget: ^0.2.0+2
+  splashscreen: ^1.2.0
   
   
 

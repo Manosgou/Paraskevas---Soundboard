@@ -1,7 +1,8 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'colours.dart';
+import 'package:paraskevas/main.dart';
 import 'audiofiles.dart';
+import 'colours.dart';
 
 class SecondRoute extends StatefulWidget {
   @override
@@ -27,41 +28,48 @@ class SecondRouteState extends State<SecondRoute> {
   }
 
   Future<bool> _onWillPop() {
-    _assetsAudioPlayer.stop();
-    Navigator.of(context).pop(true);
+    if (_assetsAudioPlayer.isPlaying.value) {
+      _assetsAudioPlayer.stop();
+    }
+
+    Navigator.of(context).pop(main());
+    return Future.value(false);
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: _onWillPop,
-        child: new Scaffold(
-          appBar: AppBar(
-            backgroundColor: PrimaryColor,
-            title: Text("Επισόδειο 1ο...."),
-          ),
-          backgroundColor: Colors.black,
-          body: ListView(
-            children: <Widget>[
-              _btn(
-                txt: 'Play',
-                onPressed: () => _open(0),
-              ),
-              _btn(
-                txt: 'Play2',
-                onPressed: () => _open(1),
-              )
-            ],
-          ),
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {
+      onWillPop: _onWillPop,
+      child: new Scaffold(
+        appBar: AppBar(
+          backgroundColor: PrimaryColor,
+          title: Text("Επισόδειο 1ο...."),
+        ),
+        backgroundColor: BackgroundColor,
+        body: ListView(
+          children: <Widget>[
+            _btn(
+              txt: 'Play',
+              onPressed: () => _open(0),
+            ),
+            _btn(
+              txt: 'Play2',
+              onPressed: () => _open(1),
+            )
+          ],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            if (_assetsAudioPlayer.isPlaying.value) {
               _assetsAudioPlayer.stop();
-            },
-            label: Text('Stop'),
-            icon: Icon(Icons.stop),
-            backgroundColor: Colors.red,
-          ),
-        ));
+            }
+          },
+          label: Text('Stop'),
+          icon: Icon(Icons.stop),
+          backgroundColor: Colors.red,
+        ),
+      ),
+    );
   }
 }
 

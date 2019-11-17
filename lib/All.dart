@@ -1,5 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:paraskevas/main.dart';
 import 'colours.dart';
 import 'audiofiles.dart';
 
@@ -12,7 +13,6 @@ class All extends StatefulWidget {
 }
 
 class AllState extends State<All> {
-  
   final AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer();
 
   var _currentAssetPosition = -1;
@@ -27,29 +27,47 @@ class AllState extends State<All> {
     );
   }
 
+  Future<bool> _onWillPop() {
+    if (_assetsAudioPlayer.isPlaying.value) {
+      _assetsAudioPlayer.stop();
+    }
+
+    Navigator.of(context).pop(main());
+    return Future.value(false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: PrimaryColor,
-        title: Text("Επισόδειο 1ο...."),
-      ),backgroundColor: Colors.black,
-      body: ListView(
-        children: <Widget>[
-          _btn(txt: 'Play', onPressed: () => _open(0)),
-          _btn(
-            txt: 'Play2',
-            onPressed: () => _open(1),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          _assetsAudioPlayer.stop();
-        },
-        label: Text('Stop'),
-        icon: Icon(Icons.stop),
-        backgroundColor: Colors.red,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: PrimaryColor,
+          title: Text("Επισόδειο 1ο...."),
+        ),
+        body: ListView(
+          children: <Widget>[
+            _btn(
+              txt: 'Play',
+              onPressed: () => _open(0),
+            ),
+            _btn(
+              txt: 'Play2',
+              onPressed: () => _open(1),
+            ),
+          ],
+        ),
+        backgroundColor: BackgroundColor,
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            if (_assetsAudioPlayer.isPlaying.value) {
+              _assetsAudioPlayer.stop();
+            }
+          },
+          label: Text('Stop'),
+          icon: Icon(Icons.stop),
+          backgroundColor: Colors.red,
+        ),
       ),
     );
   }
