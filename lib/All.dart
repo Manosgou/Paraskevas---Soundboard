@@ -77,13 +77,18 @@ class _btn extends StatelessWidget {
   final String txt;
   final VoidCallback onPressed;
 
-  const _btn({Key key, this.txt, this.onPressed}) : super(key: key);
+  const _btn({Key key,this.txt, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ButtonTheme(
       minWidth: 48.0,
-      child: RaisedButton(child: Text(txt), onPressed: onPressed),
+      child: RaisedButton(
+        child: Text(txt),
+        onPressed: onPressed,
+        textColor: Colors.white,
+        color: PrimaryColor,
+      ),
     );
   }
 }

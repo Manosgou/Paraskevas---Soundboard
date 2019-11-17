@@ -86,6 +86,8 @@ class _btn extends StatelessWidget {
       child: RaisedButton(
         child: Text(txt),
         onPressed: onPressed,
+        textColor: Colors.white,
+        color: PrimaryColor,
       ),
     );
   }
