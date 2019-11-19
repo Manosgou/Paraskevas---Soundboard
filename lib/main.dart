@@ -115,8 +115,9 @@ class AfterSplash extends StatelessWidget {
                   Navigator.of(context).push(_pageTransisionsSideMenu(All()));
                 },
               ),
+              Divider(),
               Text(
-                'About',
+                'About\n',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 18,
@@ -124,7 +125,7 @@ class AfterSplash extends StatelessWidget {
                 ),
               ),
               ExpandText(
-                'Έκδοση:  1.0.0\n\nΗ ανεπίσημη ΜΕΘΑΝΙΩΤΙΚΗ έκδοση του Παρασκευά.Φτιαγμένο από μεθανιώτη για μεθανιώτες.',
+                'Έκδοση:  1.0.0\n\nΗ ανεπίσημη ΜΕΘΑΝΙΩΤΙΚΗ έκδοση του Παρασκευά.Φτιαγμένο από μεθανιώτη για μεθανιώτες.\n',
                 textAlign: TextAlign.left,
                 maxLength: 1,
                 arrowSize: 35,
